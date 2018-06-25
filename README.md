@@ -1,5 +1,24 @@
 # Zipkin instrumentation for sqlx
 
+[![Build Status](https://travis-ci.org/jcchavezs/zipkin-instrumentation-sqlx.svg?branch=master)](https://travis-ci.org/jcchavezs/zipkin-instrumentation-sqlx)
+
 This package implements the interfaces from sqlx adding zipkin instrumentation
 
-For more information, check https://github.com/jmoiron/sqlx 
+## Install
+
+```bash
+go get github.com/jmoiron/sqlx
+```
+
+## Setup
+
+```go
+tracer, _ := zipkin.NewTracer(...)
+...
+tracedDB := NewDb(db, tracer)
+```
+
+## Usage
+
+This library does not add any functionality on top of sqlx. For more information, 
+about `sqlx.DB` usage check https://github.com/jmoiron/sqlx 
