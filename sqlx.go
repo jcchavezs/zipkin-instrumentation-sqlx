@@ -36,7 +36,7 @@ func getNameFromQuery(query string) string {
 // QueryContext executes a query that returns rows, typically a SELECT.
 // The args are for any placeholder parameters in the query.
 func (db *DB) Query(query string, args ...interface{}) (*sql.Rows, error) {
-	return db.QueryContext(context.Background(), query, args)
+	return db.db.QueryContext(context.Background(), query, args)
 }
 
 // QueryContext executes a query that returns rows, typically a SELECT.
@@ -47,7 +47,7 @@ func (db *DB) QueryContext(ctx context.Context, query string, args ...interface{
 	}))
 	defer s.Finish()
 
-	r, err := db.QueryContext(ctx, query, args...)
+	r, err := db.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		s.Tag(string(zipkin.TagError), err.Error())
 	}
@@ -58,7 +58,7 @@ func (db *DB) QueryContext(ctx context.Context, query string, args ...interface{
 // Queryx queries the database and returns an *sqlx.Rows.
 // Any placeholder parameters are replaced with supplied args.
 func (db *DB) Queryx(query string, args ...interface{}) (*sqlx.Rows, error) {
-	return db.QueryxContext(context.Background(), query, args)
+	return db.db.QueryxContext(context.Background(), query, args)
 }
 
 // QueryxContext queries the database and returns an *sqlx.Rows.
@@ -69,7 +69,7 @@ func (db *DB) QueryxContext(ctx context.Context, query string, args ...interface
 	}))
 	defer s.Finish()
 
-	r, err := db.QueryxContext(ctx, query, args...)
+	r, err := db.db.QueryxContext(ctx, query, args...)
 	if err != nil {
 		s.Tag(string(zipkin.TagError), err.Error())
 	}
@@ -80,7 +80,7 @@ func (db *DB) QueryxContext(ctx context.Context, query string, args ...interface
 // QueryRowx queries the database and returns an *sqlx.Row.
 // Any placeholder parameters are replaced with supplied args.
 func (db *DB) QueryRowx(query string, args ...interface{}) *sqlx.Row {
-	return db.QueryRowxContext(context.Background(), query, args)
+	return db.db.QueryRowxContext(context.Background(), query, args)
 }
 
 // QueryRowxContext queries the database and returns an *sqlx.Row.
@@ -91,7 +91,7 @@ func (db *DB) QueryRowxContext(ctx context.Context, query string, args ...interf
 	}))
 	defer s.Finish()
 
-	r := db.QueryRowxContext(ctx, query, args...)
+	r := db.db.QueryRowxContext(ctx, query, args...)
 	if r.Err() != nil {
 		s.Tag(string(zipkin.TagError), r.Err().Error())
 	}
@@ -102,7 +102,7 @@ func (db *DB) QueryRowxContext(ctx context.Context, query string, args ...interf
 // Exec execs a statement in the database and returns an sql.Result.
 // Any placeholder parameters are replaced with supplied args.
 func (db *DB) Exec(query string, args ...interface{}) (sql.Result, error) {
-	return db.ExecContext(context.Background(), query, args)
+	return db.db.ExecContext(context.Background(), query, args)
 }
 
 // ExecContext execs a statement in the database and returns an sql.Result.
@@ -113,7 +113,7 @@ func (db *DB) ExecContext(ctx context.Context, query string, args ...interface{}
 	}))
 	defer s.Finish()
 
-	r, err := db.ExecContext(ctx, query, args...)
+	r, err := db.db.ExecContext(ctx, query, args...)
 	if err != nil {
 		s.Tag(string(zipkin.TagError), err.Error())
 	}
@@ -130,7 +130,7 @@ func (db *DB) ExecContext(ctx context.Context, query string, args ...interface{}
 // The provided context is used for the preparation of the statement, not for
 // the execution of the statement.
 func (db *DB) PrepareContext(ctx context.Context, query string) (*sql.Stmt, error) {
-	return db.PrepareContext(ctx, query)
+	return db.db.PrepareContext(ctx, query)
 }
 
 func (db *DB) DriverName() string {
