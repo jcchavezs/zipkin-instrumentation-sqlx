@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/jcchavezs/zipkin-instrumentation-sqlx.svg?branch=master)](https://travis-ci.org/jcchavezs/zipkin-instrumentation-sqlx)
 
+**Deprecated:** use https://github.com/jcchavezs/zipkin-instrumentation-sql instead.
+
 This package implements the interfaces from sqlx adding zipkin instrumentation
 
 ## Install
